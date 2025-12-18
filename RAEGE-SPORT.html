@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your eSports Name – Team Registration</title>
+
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #fff;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 720px;
+      margin: 40px auto;
+      background: #111;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.6);
+    }
+
+    h1 {
+      text-align: center;
+      color: #00ffcc;
+      margin-top: 10px;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      border-radius: 6px;
+      border: none;
+      outline: none;
+      box-sizing: border-box;
+    }
+
+    .team-members {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 20px;
+      padding: 14px;
+      background: #00ffcc;
+      color: #000;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #00ccaa;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 14px;
+      color: #aaa;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+   
+  <div style="text-align:center;">
+
+      <img src="logo.png" alt="Logo" style=" position: absolute; 
+      left: 500px;
+      width: 60px;
+      height: auto;
+    " >
+    <h1>Your eSports Name</h1>
+    <p style="color:#ccc;">Official Tournament Registration</p>
+  </div style="text-align:center">
+  
+
+  
+
+  <form onsubmit="validateAndPay(event)">
+    <label>Team Name</label>
+    <input id="teamName" required>
+
+    <label>IGL Name</label>
+    <input id="iglName" required>
+
+    <label>IGL Email</label>
+    <input id="email" type="email" required>
+
+    <label>IGL Mobile Number</label>
+    <input id="mobile" placeholder="10-digit mobile number" required>
+
+    <label>Team Supporter</label>
+    <input id="supporter" required>
+
+    <label>Players</label>
+    <div class="team-members">
+      <input id="p1" placeholder="Player 1" required>
+      <input id="p2" placeholder="Player 2" required>
+      <input id="p3" placeholder="Player 3" required>
+      <input id="p4" placeholder="Player 4" required>
+    </div>
+
+    <button type="submit">Pay ₹1 & Register</button>
+  </form>
+
+  <div class="footer">
+    © 2025 Your eSports Name
+  </div>
+</div>
+
+<script>
+function validateAndPay(e) {
+  e.preventDefault();
+
+  const mobile = document.getElementById("mobile").value.trim();
+  
+  if (!/^\d+$/.test(mobile)) {
+    alert("❌ Mobile number must contain only digits");
+    return;
+  }
+  if (mobile.length !== 10) {
+    alert("❌ Mobile number must be exactly 10 digits");
+    return;
+  }
+
+  const data = {
+    teamName: document.getElementById("teamName").value,
+    iglName: document.getElementById("iglName").value,
+    email: document.getElementById("email").value,
+    mobile: mobile,
+    supporter: document.getElementById("supporter").value,
+    player1: document.getElementById("p1").value,
+    player2: document.getElementById("p2").value,
+    player3: document.getElementById("p3").value,
+    player4: document.getElementById("p4").value
+  };
+
+  // Submit data to Google Sheets
+  fetch("https://script.google.com/macros/s/AKfycbzOe7rn96J3lsWiwfn-gNKH4f6TJxRyCCeLQa1bJ4Jz6zq5RuFP9noyEeqN3WoPCrYb/exec", {
+    method: "POST",
+    mode: "no-cors",
+    body: JSON.stringify(data)
+  });
+
+  // Updated UPI link with am=1
+  const upiURL = "upi://pay?pa=riteshkayate18@oksbi&pn=Your eSports Name&am=1&cu=INR";
+
+  window.location.href = upiURL;
+}
+</script>
+
+</body>
+</html>
